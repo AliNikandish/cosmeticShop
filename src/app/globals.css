@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: IRANSans;
+  src: url("../../public/Fonts/IRANSans/IRANSans.ttf") format("truetype");
+
+}
+
+@font-face {
+  font-family: IRANSansLight;
+  src: url("../../public/Fonts/IRANSans/IRANSans_Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: IRANSansMedium;
+  src: url("../../public/Fonts/IRANSans/IRANSans_Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: IRANSansBold;
+  src: url("../../public/Fonts/IRANSans/IRANSans_Bold.ttf") format("truetype");
+}
+
+
+/* Loading Page Style */
+.loader {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transform: rotate(45deg);
+  overflow: hidden;
+}
+.loader:after{
+  content: '';
+  position: absolute;
+  inset: 8px;
+  margin: auto;
+  background: #222b32;
+}
+.loader:before{
+  content: '';
+  position: absolute;
+  inset: -15px;
+  margin: auto;
+  /* background: #de3500;  */
+  animation: diamondLoader 2s linear infinite;
+  @apply bg-rose-500;
+}
+@keyframes diamondLoader {
+  0%  ,10% {
+    transform: translate(-64px , -64px) rotate(-45deg)
+  }
+  90% , 100% {
+    transform: translate(0px , 0px) rotate(-45deg)
+  }
+}
+
+
+/* .replay-title{
+  
+} */
+
+
+
+.replay-title::before{
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: -5px;
+  right: 0;
+  border-right: 0;
+  border-left: 5px solid transparent;
+  border-bottom: 5px solid #2c2f34;
+}
+
+
+
+.replay-title::after{
+  content: "";
+  background: #2c2f34;
+  width: 40px;
+  height: 2px;
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+}
+
+
+/* ratting star system */
+
+.rate i, .rate i:hover ~ i {
+  color: #222;
+  text-shadow: none;
+  transition: color 200ms,
+              text-shadow 200ms;
+  /* This will remove the delay when
+     moving the cursor left or right
+     within the set of stars. */
+  transition-delay: 0;
+}
+
+/* This is the style that will be
+   applied to all stars and then
+   subsequently removed from the stars
+   to the right of the one being
+   hovered. */
+.rate:hover i {
+  @apply text-yellow-400
+  /* text-shadow: #fc0 0 0 20px; */
+}
+
+/* Make the effect apply one star at a
+   time. Limiting the selector to when
+   .rate is hovered removes the effect
+   without delay when cursor leaves
+   the .rate area. */
+.rate:hover i:nth-child(2) {
+  transition-delay: 30ms;
+}
+
+.rate:hover i:nth-child(3) {
+  transition-delay: 60ms;
+}
+
+.rate:hover i:nth-child(4) {
+  transition-delay: 90ms;
+}
+
+.rate:hover i:nth-child(5) {
+  transition-delay: 120ms;
+}
+
+/* Miscellaneous styles. */
+.rate i {
+  cursor: pointer;
+  font-style: normal;
+}

@@ -1,0 +1,213 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String           @unique
+  userName       String           @unique
+  Addres         String?
+  image          String?
+  Comment        Comment[]
+  ArticleComment ArticleComment[]
+  createdAt      DateTime         @default(now())
+  Order          Order[]
+  role           String
+  password       String
+  refreshToken   String?
+  Article        Article[]
+}
+
+model Product {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  shortDescription String
+  longDescription  String?
+  image            String?
+  price            Int
+  discountPrice    Int?
+  Comment          Comment[]
+  category         Category  @relation(fields: [categoryId], references: [id])
+  categoryId       String    @db.ObjectId
+  categoryName     String?
+  color            String?
+  brand            String?
+  isExist          Boolean
+  isInOffer        Boolean
+  isInDiscount     Boolean
+  weight           Int
+  feature          feature[]
+  createdAt        DateTime  @default(now())
+}
+
+type feature {
+  waterproof Boolean
+  oilFree    Boolean
+  durable    Boolean
+  fastDrying Boolean
+}
+
+model Comment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
+  author      User     @relation(fields: [authorEmail], references: [email])
+  authorEmail String
+  product     Product  @relation(fields: [productId], references: [id])
+  productId   String   @db.ObjectId
+  score       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Category {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  title   String?
+  image   String
+  Product Product[]
+}
+
+model ArticleCategory {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  title    String?
+  image    String
+  articles Article[]
+}
+
+model Order {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  user        User     @relation(fields: [userID], references: [id])
+  userID      String   @db.ObjectId
+  tottalPrice String
+  address     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Article {
+  id         String           @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime         @default(now())
+  title      String
+  summary    String
+  content    String
+  mainImage  String
+  duration   Int
+  published  Boolean          @default(false)
+  author     User             @relation(fields: [authorId], references: [id])
+  authorId   String           @db.ObjectId
+  category   ArticleCategory  @relation(fields: [categoryId], references: [id])
+  categoryId String           @db.ObjectId
+  Comment    ArticleComment[]
+}
+
+model ArticleComment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
+  author      User     @relation(fields: [authorEmail], references: [email])
+  authorEmail String
+  article     Article  @relation(fields: [articleId], references: [id])
+  articleId   String   @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ++++++++++++++++++++++++++++++++++++++    postgresql   ++++++++++++++++++++++++++++++++++++++
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+//   // directUrl         = env("DIRECT_URL")
+// }
+
+// enum Role {
+//   USER
+//   ADMIN
+// }
+
+// model User {
+//   id        Int       @id @default(autoincrement())
+//   name      String?
+//   email     String    @unique
+//   userName  String    @unique
+//   Addres    String?
+//   image     String?
+//   Comment   Comment[]
+//   createdAt DateTime  @default(now())
+//   Order     Order[]
+//   role      Role      @default(USER)
+//   password  String
+//   Article   Article[]
+// }
+
+// model Product {
+//   id           Int       @id @default(autoincrement())
+//   title        String
+//   description  String
+//   image        String?
+//   BasePrice    String
+//   Comment      Comment[]
+//   category     Category  @relation(fields: [categoryId], references: [id])
+//   categoryId   Int
+//   categoryName String?
+//   color        String?
+//   brand        String?
+//   isExist      Boolean
+//   isInOffer    Boolean
+//   isInDiscount Boolean
+//   feature      String[]
+// }
+
+// model Comment {
+//   id          Int      @id @default(autoincrement())
+//   content     String
+//   author      User     @relation(fields: [authorEmail], references: [email])
+//   authorEmail String
+//   product     Product  @relation(fields: [productId], references: [id])
+//   productId   Int
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+// }
+
+// model Category {
+//   id      Int       @id @default(autoincrement())
+//   title   String?
+//   image   String
+//   Product Product[]
+// }
+
+// model ArticleCategory {
+//   id       Int       @id @default(autoincrement())
+//   title    String?
+//   image    String
+//   articles Article[]
+// }
+
+// model Order {
+//   id          Int      @id @default(autoincrement())
+//   user        User     @relation(fields: [userID], references: [id])
+//   userID      Int
+//   tottalPrice String
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+// }
+
+// model Article {
+//   id         Int             @id @default(autoincrement())
+//   createdAt  DateTime        @default(now())
+//   title      String
+//   content    String
+//   published  Boolean         @default(false)
+//   author     User            @relation(fields: [authorId], references: [id])
+//   authorId   Int
+//   category   ArticleCategory @relation(fields: [categoryId], references: [id])
+//   categoryId Int
+// }

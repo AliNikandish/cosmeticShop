@@ -1,0 +1,23 @@
+.discount-Trapezoid{
+    position: absolute;
+    top: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    column-gap: 5px;
+    width: 300px !important;
+    height: 90px;
+    background: white;
+    transform: perspective(2px) rotateX(179deg);
+    left: 50% !important;
+    translate: -50%!important;
+}
+
+
+.discount-title{
+    top: 0 !important;
+    left: 50% !important;
+    translate: -50%!important;
+}
+

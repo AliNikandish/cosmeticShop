@@ -1,0 +1,15 @@
+.topbar-Trapezoid{
+    position: absolute;
+    top: 12px !important;
+    right: 55px;
+    /* left: 39% !important; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    column-gap: 5px;
+    width: 200px !important;
+    height: 80px;
+    transform: perspective(2px) rotateX(179deg);
+    @apply rounded-xl  bg-rose-500;
+}
