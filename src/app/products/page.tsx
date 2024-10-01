@@ -3,6 +3,7 @@ import React from "react";
 import prisma from "../../../lib/prismaDB";
 import RangeSlider from "@/components/RangeSlider";
 import FilterProducts from "@/components/FilterProducts/FilterProducts";
+import SearchBox from "./SearchBox";
 
 const page = async () => {
   const products = await prisma.product.findMany({
@@ -13,7 +14,7 @@ const page = async () => {
   return (
     <div className="w-full px-4 lg:px-20 mt-10 flex gap-x-5">
       
-      <div className="hidden lg:block w-1/4 border shadow-md h-[520px] sticky top-20 py-4 px-7 rounded-md">
+      {/* <div className="hidden lg:block w-1/4 border shadow-md h-[520px] sticky top-20 py-4 px-7 rounded-md">
         <div className="text-center">
           <input
             className="px-2 py-2 outline-0 bg-gray-100 text-gray-500 rounded-md text-xs w-full"
@@ -69,7 +70,9 @@ const page = async () => {
         <div className="mt-4">
         <button type="button" className="bg-rose-500 text-white w-full py-1 rounded-md">اعمال</button>
         </div>
-      </div>
+      </div> */}
+
+      <SearchBox/>
       <div className="w-full lg:w-3/4">
         <div className="flex items-center gap-x-6">
           <p className="text-gray-500 text-xs">مرتب سازی بر اساس:</p>
@@ -91,13 +94,13 @@ const page = async () => {
             return <ProductCard key={product.id} product={product} />;
           })}
         </div>
-        <div className="flex justify-center items-center mt-10 text-sm">
+        {/* <div className="flex justify-center items-center mt-10 text-sm">
         <div className="flex space-x-4">
           <p>1</p>
           <p>2</p>
           <p>بعد</p>
         </div>
-      </div>
+      </div> */}
       </div>
     </div>
   );
