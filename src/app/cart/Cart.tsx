@@ -3,76 +3,70 @@ import { GoDash, GoPlus, GoTrash } from "react-icons/go";
 import { CalculatePercentage } from "../../../utils/Helper";
 import { useReducer, useState } from "react";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 const Cart = () => {
-const getCartFromStorage= localStorage.getItem("cart");
-const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
+  const getCartFromStorage = localStorage.getItem("cart");
+  const cartData = getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
 
-  const [cart, setCart] = useState(cartData)
-  const [tottalPrice, settottalPrice] = useState(0)
-  const [tottalPriceAfterDiscount, settottalPriceAfterDiscount] = useState(cart.reduce(getTottalPrice,0)-cart.reduce(getTottalDiscount,0))
+  const [cart, setCart] = useState(cartData);
+  const [tottalPrice, settottalPrice] = useState(0);
+  const [tottalPriceAfterDiscount, settottalPriceAfterDiscount] = useState(
+    cart.reduce(getTottalPrice, 0) - cart.reduce(getTottalDiscount, 0)
+  );
 
-  
-  
-
-  function getTottalPrice(total:any, num:any) {
-    
-    return total + Math.round(num.price)*num.count;
-  }
-  
-  function getTottalDiscount(total:any, num:any) {
-    return total + Math.round(num.discountPrice)*num.count;
+  function getTottalPrice(total: any, num: any) {
+    return total + Math.round(num.price) * num.count;
   }
 
-  function addNumberProduct(itemId:any){
+  function getTottalDiscount(total: any, num: any) {
+    return total + Math.round(num.discountPrice) * num.count;
+  }
 
-    cart.forEach((item:any) => {
+  function addNumberProduct(itemId: any) {
+    cart.forEach((item: any) => {
       if (item.id === itemId) {
-        item.count +=1;
+        item.count += 1;
       }
     });
     localStorage.setItem("cart", JSON.stringify(cart));
-    const getCartFromStorage= localStorage.getItem("cart");
-    const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
-    setCart(cartData)
+    const getCartFromStorage = localStorage.getItem("cart");
+    const cartData = getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
+    setCart(cartData);
     // setCart(JSON.parse(localStorage.getItem("cart")))
-    settottalPriceAfterDiscount(cart.reduce(getTottalPrice,0)-cart.reduce(getTottalDiscount,0))
+    settottalPriceAfterDiscount(
+      cart.reduce(getTottalPrice, 0) - cart.reduce(getTottalDiscount, 0)
+    );
   }
 
-  
-  function minNumberProduct(itemId:any){
-
-    cart.forEach((item:any,index:number,object:[]) => {
+  function minNumberProduct(itemId: any) {
+    cart.forEach((item: any, index: number, object: []) => {
       if (item.id === itemId) {
-        if(item.count===1){
+        if (item.count === 1) {
           object.splice(index, 1);
-        }else{
-          item.count -=1;
+        } else {
+          item.count -= 1;
         }
       }
     });
     localStorage.setItem("cart", JSON.stringify(cart));
-    const getCartFromStorage= localStorage.getItem("cart");
-    const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
-    setCart(cartData)
+    const getCartFromStorage = localStorage.getItem("cart");
+    const cartData = getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
+    setCart(cartData);
     // setCart(JSON.parse(localStorage.getItem("cart")))
-    settottalPriceAfterDiscount(cart.reduce(getTottalPrice,0)-cart.reduce(getTottalDiscount,0))
-
+    settottalPriceAfterDiscount(
+      cart.reduce(getTottalPrice, 0) - cart.reduce(getTottalDiscount, 0)
+    );
   }
-
 
   function orderHandler() {
-
     Swal.fire({
-    text:"این بخش بزودی تکمیل میشه",
-    confirmButtonText:"باشه"
-    })
-    
+      text: "این بخش بزودی تکمیل میشه",
+      confirmButtonText: "باشه",
+    });
   }
-  
 
-
-  if (cart.length>0) {
+  if (cart.length > 0) {
     return (
       <>
         <div className="w-full px-4 lg:px-20 mt-10">
@@ -81,7 +75,10 @@ const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
               <div className="cart-items flex flex-col gap-3">
                 {cart.map((item: any) => {
                   return (
-                    <div key={item.id} className="border  bg-slate-50 p-3 rounded-md">
+                    <div
+                      key={item.id}
+                      className="border  bg-slate-50 p-3 rounded-md"
+                    >
                       <div className="flex gap-3">
                         <div>
                           <img
@@ -99,13 +96,12 @@ const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
                       </div>
                       <div className="flex justify-between items-center mt-4">
                         <div className="border border-rose-500 text-red-500 flex justify-between px-2 py-1 w-32 rounded text-lg">
-                          <button onClick={()=>addNumberProduct(item.id)}>
+                          <button onClick={() => addNumberProduct(item.id)}>
                             <GoPlus />
                           </button>
                           <div>{item.count}</div>
-                          <button onClick={()=>minNumberProduct(item.id)}>
-
-                            {item.count>1 ? <GoDash />  : <GoTrash />}
+                          <button onClick={() => minNumberProduct(item.id)}>
+                            {item.count > 1 ? <GoDash /> : <GoTrash />}
                           </button>
                         </div>
                         {!item.discountPrice ? (
@@ -134,7 +130,12 @@ const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
                                 </span>
                               </div>
                               <div className="flex gap-x-1">
-                                <p className="text-sm"> {(item.price-item.discountPrice).toLocaleString()}</p>
+                                <p className="text-sm">
+                                  {" "}
+                                  {(
+                                    item.price - item.discountPrice
+                                  ).toLocaleString()}
+                                </p>
                                 <svg
                                   className="w-5 fill-text-darkGray"
                                   viewBox="0 0 24 24"
@@ -149,7 +150,11 @@ const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
                               </div>
                             </div>
                             <span className="w-8 bg-rose-500 text-white rounded-md p-1  text-xs">
-                              {CalculatePercentage(item.price,item.discountPrice)}%
+                              {CalculatePercentage(
+                                item.price,
+                                item.discountPrice
+                              )}
+                              %
                             </span>
                           </div>
                         )}
@@ -165,7 +170,9 @@ const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
                   قیمت کالاها ({cart.length})
                 </p>
                 <div className="flex gap-x-1">
-                  <p className="text-xs lg:text-sm">{cart.reduce(getTottalPrice,0).toLocaleString()}</p>
+                  <p className="text-xs lg:text-sm">
+                    {cart.reduce(getTottalPrice, 0).toLocaleString()}
+                  </p>
                   <svg
                     className="w-5 fill-gray-500"
                     viewBox="0 0 24 24"
@@ -182,7 +189,9 @@ const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
               <div className="mt-4 flex justify-between border-b pb-3">
                 <p className="text-xs lg:text-sm text-red-500">تخفیف کالاها</p>
                 <div className="flex gap-x-1">
-                  <p className="text-xs lg:text-sm text-red-500">{cart.reduce(getTottalDiscount,0).toLocaleString()}</p>
+                  <p className="text-xs lg:text-sm text-red-500">
+                    {cart.reduce(getTottalDiscount, 0).toLocaleString()}
+                  </p>
                   <svg
                     className="w-5 fill-red-500"
                     viewBox="0 0 24 24"
@@ -199,7 +208,9 @@ const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
               <div className="mt-4 flex justify-between">
                 <p className="text-xs lg:text-sm ">جمع سبد خرید</p>
                 <div className="flex gap-x-1">
-                  <p className="text-xs lg:text-sm">{tottalPriceAfterDiscount.toLocaleString()}</p>
+                  <p className="text-xs lg:text-sm">
+                    {tottalPriceAfterDiscount.toLocaleString()}
+                  </p>
                   <svg
                     className="w-6"
                     viewBox="0 0 24 24"
@@ -214,27 +225,42 @@ const cartData= getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
                 </div>
               </div>
               <div className="mt-16 hidden lg:block">
-                <button className="bg-rose-500 text-white py-1 w-full rounded" onClick={orderHandler}>
+                <button
+                  className="bg-rose-500 text-white py-1 w-full rounded"
+                  onClick={orderHandler}
+                >
                   ثبت سفارش
                 </button>
               </div>
             </div>
           </div>
         </div>
-        
+
         <div className="fixed bottom-0 w-full z-50  lg:hidden mt-4">
-          <button className="bg-rose-500 text-white py-2 w-full rounded" onClick={orderHandler}>
+          <button
+            className="bg-rose-500 text-white py-2 w-full rounded"
+            onClick={orderHandler}
+          >
             ثبت سفارش
           </button>
         </div>
       </>
     );
   } else {
-    return (<div className="w-full px-4 lg:px-20 mt-10 h-80">
-      <div className="flex justify-center items-center text-rose-500">
-        <p>سبد خرید خالی است</p>
+    return (
+      <div className="w-full px-4 lg:px-20 mt-10 h-80">
+        <div className="flex justify-center items-center text-gray-500">
+          <div className="flex flex-col items-center">
+            <img className="w-32 h-32" src="shoppingBagVector.png" alt="" />
+            <p className="mt-5">سبد خرید شما خالی است!</p>
+
+            <div className="mt-10">
+              <Link className="border border-rose-500 rounded-md px-3 py-1 text-sm text-rose-500" href='/'>بازگشت به خانه</Link>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>)
+    );
   }
 };
 
