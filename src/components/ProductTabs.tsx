@@ -126,19 +126,6 @@ const ProductTabs = ({ description, isLoggedIn }: ProductTabsProps) => {
             توضیحات{" "}
           </button>
           <button
-            onClick={() => setTab("information")}
-            type="button"
-            title=""
-            className={`${
-              tab === "information"
-                ? "bg-white text-black rounded-tl-xl rounded-tr-xl px-4"
-                : ""
-            } text-sm font-medium`}
-          >
-            {" "}
-            مشخصات{" "}
-          </button>
-          <button
             type="button"
             onClick={() => setTab("comments")}
             title=""
