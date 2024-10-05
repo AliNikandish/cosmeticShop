@@ -1,7 +1,7 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import { comment } from "postcss";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegCommentAlt, FaStar } from "react-icons/fa";
 import { IoMdStar } from "react-icons/io";
 import Swal from "sweetalert2";
@@ -150,8 +150,7 @@ const ProductTabs = ({ description, isLoggedIn }: ProductTabsProps) => {
           <p className="mt-6">{description}</p>
         </div>
       ) : (
-        //  <Comments comments={comments} />
-        <>
+ <React.Fragment>
           <div className="mt-5 p-3 border rounded-md">
             <div className="flex justify-between items-center">
               <p className="font-IRANSansMedium text-sm">دیدگاه کاربرها</p>
@@ -249,7 +248,7 @@ const ProductTabs = ({ description, isLoggedIn }: ProductTabsProps) => {
               </button>
             </div>
           </div>
-        </>
+        </React.Fragment>
       )}
     </div>
   );
