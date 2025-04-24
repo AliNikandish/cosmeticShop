@@ -90,7 +90,7 @@ export default function MobileFilterSidebar({
               <div className="mt-4 space-y-2">
                 {categories.map((category: any) => {
                   return (
-                    <div className="flex gap-x-2 text-sm ">
+                    <div className="flex gap-x-2 text-sm " key={category.id}>
                       <input
                         type="checkbox"
                         checked={selectedCategories.includes(category.id)}
@@ -111,7 +111,7 @@ export default function MobileFilterSidebar({
                 {["قرمز", "آبی", "صورتی", "مشکی", "بنفش", "کرم", "بیرنگ"].map(
                   (color) => {
                     return (
-                      <div className="flex gap-x-2 text-sm ">
+                      <div className="flex gap-x-2 text-sm " key={color}>
                         <input
                           type="checkbox"
                           name={color}
@@ -146,7 +146,7 @@ export default function MobileFilterSidebar({
                   " اکلیپس",
                 ].map((brand) => {
                   return (
-                    <div className="flex gap-x-2 text-sm ">
+                    <div className="flex gap-x-2 text-sm " key={brand}>
                       <input
                         type="checkbox"
                         name={brand}
