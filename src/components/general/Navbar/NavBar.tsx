@@ -1,6 +1,7 @@
 "use client";
+import NavLink from "@/components/NavLink";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
@@ -11,25 +12,24 @@ import { FaBlog } from "react-icons/fa6";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaBasketShopping } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa6";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
-
-type NavBarProp={
-  name:string
-  isLogedIn:boolean
-}
+type NavBarProp = {
+  name: string;
+  isLogedIn: boolean;
+};
 
 const NavBar = ({ name, isLogedIn }: NavBarProp) => {
   const [showNavbar, setShowNavbar] = useState(false);
-  const router=useRouter()
+  const router = useRouter();
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
 
+  useEffect(() => {}, []);
 
-  useEffect(()=>{},[])
-
-  const handleSignOut=async()=>{
+  const handleSignOut = async () => {
     const res = await fetch(`/api/auth/sign-out/`, {
       method: "POST",
       headers: {
@@ -37,52 +37,66 @@ const NavBar = ({ name, isLogedIn }: NavBarProp) => {
       },
     });
 
-    if(res.status===200){
-      alert('با موفقیت خارج شدید!')
-      router.refresh()
+    if (res.status === 200) {
+      alert("با موفقیت خارج شدید!");
+      router.refresh();
     }
-
-  }
-
-  
+  };
 
   return (
     <>
       <nav className="w-full h-10 bg-pink-100 flex justify-between items-center  px-5 lg:px-20 text-sm ">
         <div className="flex items-center gap-x-5 ">
-          <Link  className="flex items-center gap-x-1 text-rose-500" href="/">
+          <NavLink customClassName={"flex items-center gap-x-1 "} href="/">
             <FaHome />
             <span> صفحه اصلی</span>
-          </Link>
-          <Link className="md:flex items-center gap-x-1 hidden" href="products">
+          </NavLink>
+
+          <NavLink
+            customClassName="md:flex items-center gap-x-1 hidden"
+            href="/products"
+          >
             <FaShop />
             <span>فروشگاه</span>
-          </Link>
-          <Link className="md:flex items-center gap-x-1 hidden " href="blog">
+          </NavLink>
+          <NavLink
+            customClassName="md:flex items-center gap-x-1 hidden "
+            href="/blog"
+          >
             <FaBlog />
             <span>وبلاگ</span>
-          </Link>
-          <Link className="md:flex items-center gap-x-1 hidden" href="about-us">
+          </NavLink>
+          <NavLink
+            customClassName="md:flex items-center gap-x-1 hidden"
+            href="/about-us"
+          >
             <FaUser />
             <span>درباره ما</span>
-          </Link>
-          <Link className="md:flex items-center gap-x-1 hidden" href="contact-us">
+          </NavLink>
+          <NavLink
+            customClassName="md:flex items-center gap-x-1 hidden"
+            href="/contact-us"
+          >
             <FaHeadphones />
             <span>تماس با ما</span>
-          </Link>
+          </NavLink>
         </div>
         <div className="flex items-center gap-x-3">
           <div className="hidden md:block">
             <FaMagnifyingGlass className="md:text-[18px]" />
           </div>
-          <Link href={'/cart'} className="relative hidden md:block">
+          <Link href={"/cart"} className="relative hidden md:block">
             <FaBasketShopping className="md:text-[18px]" />
           </Link>
           {isLogedIn ? (
-           <button type="button" className=" items-center gap-x-1 mr-3 hidden md:flex" onClick={handleSignOut}>
-           <FaRegUser className="md:text-[18px]" />
-           <span>خروج</span>
-         </button>
+            <button
+              type="button"
+              className=" items-center gap-x-1 mr-3 hidden md:flex"
+              onClick={handleSignOut}
+            >
+              <FaRegUser className="md:text-[18px]" />
+              <span>خروج</span>
+            </button>
           ) : (
             <Link
               href="/sign"
@@ -102,44 +116,89 @@ const NavBar = ({ name, isLogedIn }: NavBarProp) => {
       </nav>
 
       {/* //mobile menu */}
+      {showNavbar && (
+        <div
+          onClick={() => setShowNavbar(false)}
+          className="fixed inset-0 bg-black bg-opacity-40 z-30"
+        />
+      )}
+
       <nav
-        className={`h-full fixed bottom-0 top-0 bg-pink-200 w-2/3 sm:w-1/2 z-20 md:hidden p-4 transition-all ease-in-out delay-200 ${
-          showNavbar ? "translate-x-0" : "translate-x-[500px]"
+        className={`h-full fixed bottom-0 top-0 bg-pink-100 rounded-sm shadow w-2/3 sm:w-1/2 z-50 md:hidden p-4 transition-all ease-in-out delay-200 ${
+          showNavbar ? "translate-x-0" : "translate-x-[500px] "
         }  `}
       >
-        <Link className="flex items-center gap-x-1 text-rose-500 mb-5" href="">
-          <FaHome />
-          <span> صفحه اصلی</span>
-        </Link>
-        <Link className="flex items-center gap-x-1 mb-5 " href="">
-          <FaShop />
-          <span>فروشگاه</span>
-        </Link>
-        <Link className="flex  items-center gap-x-1 mb-5 " href="">
-          <FaBlog />
-          <span>وبلاگ</span>
-        </Link>
-        <Link className="flex items-center gap-x-1 mb-5 " href="">
-          <FaUser />
-          <span>درباره ما</span>
-        </Link>
-        <Link className="flex  items-center gap-x-1 mb-5 " href="">
-          <FaHeadphones />
-          <span>تماس با ما</span>
-        </Link>
+        <div onClick={() => setShowNavbar(false)}>
+          <NavLink href={"/"} customClassName="flex items-center gap-x-1  mb-5">
+            <FaHome />
+            <span> صفحه اصلی</span>
+          </NavLink>
+        </div>
 
-        <Link href={'/cart'}  className="flex  items-center gap-x-1 mb-5 ">
-          <div className="relative">
-            <FaBasketShopping className="md:text-[18px]" />
+        <div onClick={() => setShowNavbar(false)}>
+          <NavLink
+            href={"/products"}
+            customClassName="flex items-center gap-x-1 mb-5 "
+          >
+            <FaShop />
+            <span>فروشگاه</span>
+          </NavLink>
+        </div>
 
-          </div>
-          <span>سبد خرید</span>
-        </Link>
+        <div onClick={() => setShowNavbar(false)}>
+          <NavLink
+            href={"/blog"}
+            customClassName="flex  items-center gap-x-1 mb-5 "
+          >
+            <FaBlog />
+            <span>وبلاگ</span>
+          </NavLink>
+        </div>
+
+        <div onClick={() => setShowNavbar(false)}>
+          <NavLink
+            href={"/about-us"}
+            customClassName="flex items-center gap-x-1 mb-5 "
+          >
+            <FaUser />
+            <span>درباره ما</span>
+          </NavLink>
+        </div>
+
+        <div onClick={() => setShowNavbar(false)}>
+          <NavLink
+            href={"/contact-us"}
+            customClassName="flex  items-center gap-x-1 mb-5 "
+          >
+            <FaHeadphones />
+            <span>تماس با ما</span>
+          </NavLink>
+        </div>
+
+        <div onClick={() => setShowNavbar(false)}>
+          <NavLink
+            href={"/cart"}
+            customClassName="flex  items-center gap-x-1 mb-5 "
+          >
+            <div className="relative">
+              <FaBasketShopping className="md:text-[18px]" />
+            </div>
+            <span>سبد خرید</span>
+          </NavLink>
+        </div>
 
         <div className="flex items-center gap-x-1 mb-5">
           <FaRegUser className="md:text-[18px]" />
 
           {isLogedIn ? <span>خروج</span> : <span>ورود/ثبت نام</span>}
+        </div>
+
+        <div
+          className="flex items-center gap-x-1"
+          onClick={() => setShowNavbar(false)}
+        >
+          <IoCloseCircleOutline />
+          <button className="">بستن منو</button>
         </div>
       </nav>
     </>
