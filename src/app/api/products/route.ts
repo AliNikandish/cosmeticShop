@@ -1,61 +1,160 @@
-// import fs from "fs";
-import { writeFile } from "fs/promises";
 import { NextRequest } from "next/server";
-import path from "path";
 import prisma from "../../../../lib/prismaDB";
 
-export async function POST(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const formData = await req.formData();
-    const title = formData.get("");
-    const description = formData.get("");
-    const isExist = formData.get("");
-    const isInDiscount = formData.get("");
-    const isInOffer = formData.get("");
-    const price = formData.get("");
-    const brand = formData.get("");
-    const category = formData.get("");
-    const categoryId = formData.get("");
-    const categoryName = formData.get("");
-    const color = formData.get("");
-    const image = formData.get("");
-    const feature = formData.get("");
+    const { searchParams } = request.nextUrl;
 
-    // const newProduct = await prisma.product.create({
-    //   data: {
-    //     title,
-    //     description,
-    //     isExist,
-    //     isInDiscount,
-    //     isInOffer,
-    //     price,
-    //     brand,
-    //     category,
-    //     categoryId,
-    //     categoryName,
-    //     color,
-    //     image,
-    //     feature,
-    //   },
-    // });
-    const newProduct='';
-    
+    const categoryParams = searchParams.getAll("categoryId");
+    const minPriceParam = searchParams.get("minPrice");
+    const maxPriceParam = searchParams.get("maxPrice");
+    const brandParams = searchParams.getAll("brand");
+    const colorParams = searchParams.getAll("color");
+    const isExistParam = searchParams.get("isExist");
+    const isInOfferParam = searchParams.get("isInOffer");
+    const isInDiscountParam = searchParams.get("isInDiscount");
+    const skipParam = searchParams.get("skip") || "0";
+    const takeParam = searchParams.get("take") || "10";
+    const sortParam = searchParams.get("sort") || "newest";
+    const searchParam = searchParams.get("search");
 
-    return Response.json(
-      { message: "Product created successfully :))", data: newProduct },
-      { status: 201 }
-    );
-  } catch (err) {
-    return Response.json({ message: err }, { status: 500 });
-  }
-}
+    const skip = Number(skipParam);
+    const take = Number(takeParam);
 
-export async function GET() {
-  try {
-    const products = await prisma.product.findMany({});
+    const whereClause: any = {};
 
-    return Response.json(products);
+    // categories
+    let categoryIds: string[] = [];
+    if (categoryParams.length > 0) {
+      categoryIds = categoryParams[0].split(",");
+    }
+
+    if (categoryIds.length > 0) {
+      whereClause.categoryId = { in: categoryIds };
+    }
+
+    // colors
+    let colorNames: string[] = [];
+    if (colorParams.length > 0) {
+      colorNames = colorParams[0].split(",");
+    }
+
+    if (colorNames.length > 0) {
+      whereClause.color = { in: colorNames };
+    }
+
+    // brand
+    let brandNames: string[] = [];
+    if (brandParams.length > 0) {
+      brandNames = brandParams[0].split(",");
+    }
+
+    if (brandNames.length > 0) {
+      whereClause.brand = { in: brandNames };
+    }
+
+    //price filtering without NaN
+    if (minPriceParam || maxPriceParam) {
+      const minPrice = Number(minPriceParam);
+      const maxPrice = Number(maxPriceParam);
+
+      if (!isNaN(minPrice) || !isNaN(maxPrice)) {
+        whereClause.price = {};
+        if (!isNaN(minPrice)) whereClause.price.gte = minPrice;
+        if (!isNaN(maxPrice)) whereClause.price.lte = maxPrice;
+      }
+    }
+
+    if (isExistParam) {
+      whereClause.isExist = isExistParam === "true";
+    }
+    if (isInOfferParam) {
+      whereClause.isInOffer = isInOfferParam === "true";
+    }
+    if (isInDiscountParam) {
+      whereClause.isInDiscount = isInDiscountParam === "true";
+    }
+
+    if (searchParam) {
+      whereClause.title = {
+        contains: searchParam,
+        mode: "insensitive",
+      };
+    }
+
+    const hasFilters = Object.keys(whereClause).length > 0;
+
+    // sort
+    let orderBy: any = {};
+
+    switch (sortParam) {
+      case "expensive":
+        orderBy = { price: "desc" };
+        break;
+      case "cheap":
+        orderBy = { price: "asc" };
+        break;
+      case "newest":
+        orderBy = { createdAt: "desc" };
+        break;
+      case "popular":
+        
+        let products = await prisma.product.findMany({
+          where: whereClause,
+          skip,
+          take,
+          include: {
+            Comment: true,
+          },
+        });
+
+        // calculate avg score product
+        products = products.map((product) => {
+          const comments = product.Comment;
+          const avgScore =
+            comments.length > 0
+              ? comments.reduce((acc, curr) => acc + curr.score, 0) /
+                comments.length
+              : 0;
+          return {
+            ...product,
+            avgScore,
+          };
+        });
+
+
+        products.sort((a:any, b:any) => b.avgScore - a.avgScore);
+
+        // paginate 
+        const paginated = products.slice(skip, skip + take);
+
+        return Response.json({
+          products: paginated,
+          total: products.length,
+        });
+      default:
+        orderBy = { createdAt: "desc" };
+        break;
+    }
+
+    const products = await prisma.product.findMany({
+      ...(hasFilters && { where: whereClause }),
+      skip,
+      take,
+      orderBy,
+    });
+
+    //( infinite scroll)
+    const total = await prisma.product.count({
+      ...(hasFilters && { where: whereClause }),
+    });
+
+    return Response.json({
+      products,
+      total,
+    });
   } catch (error) {
-    return Response.json({ message: "Some error occured" }, { status: 500 });
+    console.error(error);
+    return Response.json({ message: "Some error occurred" }, { status: 500 });
   }
 }

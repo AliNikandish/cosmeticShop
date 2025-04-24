@@ -20,7 +20,7 @@ const ArticleCard = ({article}:{article:ArticleCardProps}) => {
       <div className="relative">
         <img
           className="rounded h-[150px] w-full"
-          src={article.mainImage}
+          src={article.mainImage? article.mainImage:"No_Image_Available.jpg"}
           alt=""
         />
         <div className="absolute bottom-[-17px] left-[21px]">

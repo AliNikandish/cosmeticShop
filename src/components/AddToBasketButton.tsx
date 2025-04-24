@@ -149,7 +149,7 @@ const AddToBasketButton = ({ product, type }: {product:product,type:number}) => 
     return (
       <div className="flex gap-x-6 mt-3">
         <div className="flex gap-x-3 items-center">
-          <button className="border px-0.5 py-1 font-bold" onClick={() => setCount(count - 1)}>-</button>
+          <button className="border px-0.5 py-1 font-bold" onClick={() => count>0 ? setCount(count - 1) : 0}>-</button>
           <span>{count}</span>
           <button className="border px-0.5 py-1 font-bold" onClick={() => setCount(count + 1)}>+</button>
         </div>

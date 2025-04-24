@@ -30,7 +30,7 @@ const DisCountCard = ({ product }: {product:DisCountCardProp}) => {
       <div className="relative">
         <Link href={`/product/${product.id}`} >
         <img
-          src={product.image!}
+           src={product.image? product.image : 'No_Product_Image_Available.png'}
           alt=""
           className="h-[300px] w-full rounded-2xl"
         />

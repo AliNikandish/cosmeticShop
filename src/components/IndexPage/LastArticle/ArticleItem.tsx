@@ -23,7 +23,7 @@ const ArticleItem = ({ismain,isSmall,article}:ArticleItemProps) => {
   return (
     <div className='relative h-full'>
     {/* <img className={`rounded-md  w-full ${ismain ?'h-full':'h-[175px]'}`} src="foundation-cream.jpg" alt="" /> */}
-        <img className={`rounded-md  w-full ${ismain ?'h-full':'h-[175px]'}`} src={article.mainImage} alt="" />
+        <img className={`rounded-md  w-full ${ismain ?'h-full':'h-[175px]'}`} src={article.mainImage? article.mainImage:"No_Image_Available.jpg"} alt="" />
 
     <div className="custom-overlay rounded-md absolute top-0 bottom-0 bg-black/30 w-full text-white ">
     <div className="absolute top-1 left-1  bg-rose-500 p-0.5 px-1.5 rounded-md text-[10px]">{article.category.title}</div>

@@ -87,7 +87,8 @@ const page = async ({
           </div>
         </div>
         <div className="mt-4">
-          <img src={article?.mainImage} className="rounded-md" alt="" />
+          <img src={article && article.mainImage? article.mainImage:"No_Image_Available.jpg"}
+          className="rounded-md" alt="" />
         </div>
 
         <div className="mt-4">

@@ -32,7 +32,7 @@ const ProductCard = ({product}:{product:ProductCardProps}) => {
          <Link href={`/product/${product.id}`}>
          <div className='relative'>
             <div className={`off-badge absolute top-[0px] right-2 p-1 text-xs bg-rose-600 text-white w-8 h-8 flex justify-center items-center ${product.discountPrice ? '' : 'hidden'}`} style={{borderRadius:' 0 0 50% 50%'}}>{CalculatePercentage(product.price,product.discountPrice)}%</div>
-            <img className='h-60 w-full' src={product.image!} alt="" />
+            <img className='h-60 w-full' src={product.image? product.image : 'No_Product_Image_Available.png'} alt="" />
           </div>
           <p className='text-xs md:text-sm text-center line-clamp-1'>{product.title}</p>
          </Link>

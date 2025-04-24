@@ -38,7 +38,7 @@ if(product){
         <div className="relative">
           <img
             className="border-2 h-80 w-auto"
-            src={product?.image!}
+            src={product.image? product.image : 'No_Product_Image_Available.png'}
             alt=""
           />
           <div
