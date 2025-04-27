@@ -4,7 +4,7 @@ export function CalculatePercentage(price: any, discountPrice: any) {
   return Math.floor((discountPrice / price) * 100);
 }
 
-export function FormatTimeNumeric(date: Date) {
+export function FormatTimeNumeric(date: Date|string) {
   // let options:any = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric',minute: 'numeric',second: 'numeric' };
   let options: any = { year: "numeric", month: "numeric", day: "numeric" };
   let newDate = new Date(date).toLocaleDateString("fa-IR", options);
