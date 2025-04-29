@@ -4,12 +4,12 @@ import SiteFeaturesItem from "./SiteFeaturesItem";
 
 const SiteFeatures = () => {
   return (
-    <div className="w-full h-[80px] flex bg-pink-100 px-4 lg:px-20 pt-10 justify-between items-center pb-[40px] md:pb-[150px] lg:pb-[200px] relative">
+    <div className="flex w-full h-[80px]  md:bg-pink-100 px-4 lg:px-20 pt-10 justify-between items-center pb-[40px] md:pb-[150px] lg:pb-[200px] relative">
     
-      <SiteFeaturesItem title='محصولات اورجینال' subTitle='ضمانت اورجینال بودن' iconName={<FaCircleCheck className="text-base md:text-2xl lg:text-3xl text-pink-600" />} />
-      <SiteFeaturesItem title='جدیدترین های دنیا' subTitle='محصولات بروز' iconName={<FaStar className="text-base md:text-2xl lg:text-3xl text-pink-600" />} />
-      <SiteFeaturesItem title='پشتیبانی سریع' subTitle='پشتیبانی 24 ساعته' iconName={<FaHeadset className="text-base md:text-2xl lg:text-3xl text-pink-600" />} />
-      <SiteFeaturesItem title='پرداخت امن' subTitle='درگاه معتبر بانکی' iconName={<FaLock className="text-base md:text-2xl lg:text-3xl text-pink-600" />} />
+      <SiteFeaturesItem title='محصولات اورجینال' subTitle='ضمانت اورجینال بودن' iconName={<FaCircleCheck className="text-sm xs:text-base sm:text-2xl lg:text-3xl text-pink-600" />} />
+      <SiteFeaturesItem title='جدیدترین های دنیا' subTitle='محصولات بروز' iconName={<FaStar className="text-sm xs:text-base sm:text-2xl lg:text-3xl text-pink-600" />} />
+      <SiteFeaturesItem title='پشتیبانی سریع' subTitle='پشتیبانی 24 ساعته' iconName={<FaHeadset className="text-sm xs:text-base sm:text-2xl lg:text-3xl text-pink-600" />} />
+      <SiteFeaturesItem title='پرداخت امن' subTitle='درگاه معتبر بانکی' iconName={<FaLock className="text-sm xs:text-base sm:text-2xl lg:text-3xl text-pink-600" />} />
 
       <div className="absolute w-full right-0 bottom-[-25px] hidden md:inline">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

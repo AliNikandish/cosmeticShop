@@ -45,7 +45,7 @@ const NavBar = ({ name, isLogedIn }: NavBarProp) => {
 
   return (
     <>
-      <nav className="w-full h-10 bg-pink-100 flex justify-between items-center  px-5 lg:px-20 text-sm ">
+      <nav className="w-full h-10 bg-slate-800 text-white md:bg-pink-100 md:text-black flex justify-between items-center  px-5 lg:px-20 text-sm ">
         <div className="flex items-center gap-x-5 ">
           <NavLink customClassName={"flex items-center gap-x-1 "} href="/">
             <FaHome />

@@ -2,9 +2,9 @@ import Sliders from './Sliders'
 
 const Banners = () => {
   return (
-    <div className='w-full  md:h-[600px] bg-pink-100 px-4 lg:px-20 pt-10 relative '>
+    <div className='w-full  lg:h-[600px] md:bg-pink-100 px-2 xs:px-4 lg:px-20 pt-5 md:pt-10 relative '>
       <div className='lg:flex items-center justify-between gap-x-3'>
-        <div className='w-full lg:w-8/12  h-[215px] md:h-[512px]  rounded-md relative '>
+        <div className='w-full lg:w-8/12   lg:h-[512px]  rounded-md relative '>
         <Sliders/>
         </div>
         <div className='w-4/12  flex-col gap-y-3 hidden lg:flex '>

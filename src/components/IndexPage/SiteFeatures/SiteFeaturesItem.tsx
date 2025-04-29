@@ -9,11 +9,11 @@ type SiteFeaturesItemProp={
 
 const SiteFeaturesItem = ({title,subTitle,iconName}:SiteFeaturesItemProp) => {
   return (
-    <div className="flex gap-x-2 items-center">
+    <div className="flex gap-x-0.5 xs:gap-x-2 items-center">
     {iconName}
     <div>
-      <p className="text-[10px] md:text-sm lg:text-base font-IRANSansMedium">{title}</p>
-      <p className="text-[8px] md:text-[10px] lg:text-xs text-gray-500">
+      <p className="text-[10px]  sm:text-sm lg:text-base font-IRANSansMedium">{title}</p>
+      <p className="text-[8px] sm:text-[10px] lg:text-xs text-gray-500">
           {subTitle}
       </p>
     </div>
