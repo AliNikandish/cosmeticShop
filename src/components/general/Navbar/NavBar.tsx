@@ -13,6 +13,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaBasketShopping } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa6";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import SearchOverlay from "./SearchOverlay";
 
 type NavBarProp = {
   name: string;
@@ -45,7 +46,7 @@ const NavBar = ({ name, isLogedIn }: NavBarProp) => {
 
   return (
     <>
-      <nav className="w-full h-10 bg-slate-800 text-white md:bg-pink-100 md:text-black flex justify-between items-center  px-5 lg:px-20 text-sm ">
+      <nav className="w-full h-10 bg-pink-100 text-black hidden md:flex justify-between items-center  px-5 lg:px-20 text-sm ">
         <div className="flex items-center gap-x-5 ">
           <NavLink customClassName={"flex items-center gap-x-1 "} href="/">
             <FaHome />
@@ -83,7 +84,7 @@ const NavBar = ({ name, isLogedIn }: NavBarProp) => {
         </div>
         <div className="flex items-center gap-x-3">
           <div className="hidden md:block">
-            <FaMagnifyingGlass className="md:text-[18px]" />
+            <SearchOverlay />
           </div>
           <Link href={"/cart"} className="relative hidden md:block">
             <FaBasketShopping className="md:text-[18px]" />
@@ -112,6 +113,27 @@ const NavBar = ({ name, isLogedIn }: NavBarProp) => {
           onClick={() => handleShowNavbar()}
         >
           <BiMenuAltLeft />
+        </div>
+      </nav>
+
+      {/* Mobile nav */}
+      <nav className="flex md:hidden w-full h-10 bg-slate-800 text-white  justify-between items-center  px-5 lg:px-20 text-sm ">
+        <NavLink customClassName={"flex items-center gap-x-1 "} href="/">
+          <FaHome />
+          <span> صفحه اصلی</span>
+        </NavLink>
+
+        <div className="flex gap-x-2 items-center">
+          <SearchOverlay />
+
+          <div
+            className={`text-2xl md:hidden ${
+              showNavbar ? "text-rose-500" : ""
+            }`}
+            onClick={() => handleShowNavbar()}
+          >
+            <BiMenuAltLeft />
+          </div>
         </div>
       </nav>
 
