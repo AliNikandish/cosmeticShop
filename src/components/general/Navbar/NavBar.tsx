@@ -86,26 +86,28 @@ const NavBar = ({ name, isLogedIn }: NavBarProp) => {
           <div className="hidden md:block">
             <SearchOverlay />
           </div>
-          <Link href={"/cart"} className="relative hidden md:block">
+          <NavLink href={"/cart"} customClassName="relative hidden md:block">
             <FaBasketShopping className="md:text-[18px]" />
-          </Link>
+          </NavLink>
           {isLogedIn ? (
             <button
               type="button"
-              className=" items-center gap-x-1 mr-3 hidden md:flex"
+              className=" items-center gap-x-1 mr-3 hidden md:flex bg-rose-600 px-2 py-1 rounded text-white"
               onClick={handleSignOut}
             >
               <FaRegUser className="md:text-[18px]" />
               <span>خروج</span>
             </button>
           ) : (
-            <Link
+            <div>
+              <NavLink
               href="/sign"
-              className=" items-center gap-x-1 mr-3 hidden md:flex"
+              customClassName=" items-center gap-x-1 mr-3 hidden md:flex"
             >
               <FaRegUser className="md:text-[18px]" />
               <span>ورود/ثبت نام</span>
-            </Link>
+            </NavLink>
+            </div>
           )}
         </div>
         <div
@@ -210,13 +212,31 @@ const NavBar = ({ name, isLogedIn }: NavBarProp) => {
         </div>
 
         <div className="flex items-center gap-x-1 mb-5">
-          <FaRegUser className="md:text-[18px]" />
+          {/* <FaRegUser className="md:text-[18px]" /> */}
 
-          {isLogedIn ? <span>خروج</span> : <span>ورود/ثبت نام</span>}
+          {/* {isLogedIn ? <span>خروج</span> : <span>ورود/ثبت نام</span>} */}
+
+          {isLogedIn ? (
+            <button
+              type="button"
+              className=" flex items-center gap-x-1  bg-rose-600 px-2 py-1 rounded text-white w-[100px]"
+              onClick={handleSignOut}
+            >
+              <FaRegUser className="md:text-[18px]" />
+              <span>خروج</span>
+            </button>
+          ) : (
+            <div  onClick={() => setShowNavbar(false)}>
+              <NavLink href="/sign" customClassName="flex items-center gap-x-1">
+                <FaRegUser className="md:text-[18px]" />
+                <span>ورود/ثبت نام</span>
+              </NavLink>
+            </div>
+          )}
         </div>
 
         <div
-          className="flex items-center gap-x-1"
+          className="flex items-center gap-x-1 w-[100px]  bg-sky-800 px-2 py-1 rounded text-white "
           onClick={() => setShowNavbar(false)}
         >
           <IoCloseCircleOutline />
