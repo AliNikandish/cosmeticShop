@@ -45,7 +45,7 @@ const page = async ({
       },
     },
   });
-
+  
   return (
     <div className="w-full px-4 lg:px-20 mt-10">
       <div className="border rounded-md p-4 w-full md:w-2/3 mx-auto ">
@@ -87,7 +87,7 @@ const page = async ({
           </div>
         </div>
         <div className="mt-4">
-          <img src={article && article.mainImage? article.mainImage:"No_Image_Available.jpg"}
+          <img src={article && article.mainImage? '/'+article.mainImage:"No_Image_Available.jpg"}
           className="rounded-md" alt="" />
         </div>
 
