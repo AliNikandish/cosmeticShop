@@ -1,3 +1,4 @@
+
 import { NextResponse } from "next/server";
 import prisma from "../../../../../lib/prismaDB";
 import { generateAccessToken, hashPassword } from "../../../../../utils/auth";
@@ -13,20 +14,18 @@ export async function POST(req: Request) {
       );
     }
 
-    const isUserExist = await prisma.user.findMany({
+    
+
+    const isUserExist = await prisma.user.findFirst({
       where: {
-        AND: [
-          {
-            OR: [{ email: email }, { userName: userName }],
-          },
-        ],
+        OR: [{ email }, { userName }],
       },
     });
-
-    if (isUserExist.length < 0) {
+    
+    if (isUserExist) {
       return Response.json(
         {
-          message: "The username or email or phone exist already !!",
+          message: "The username or email already exists!",
         },
         {
           status: 422,

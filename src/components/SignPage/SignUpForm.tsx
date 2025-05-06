@@ -11,10 +11,6 @@ const SignUpForm = () => {
   const router=useRouter()
   
   async function  handleSignup(){
-    const name='test'
-    const password='test'
-    const userName='test1'
-    const email = 'test1@mysite.com'
       const res = await fetch(`/api/auth/sign-up/`, {
       method: "POST",
       headers: {
