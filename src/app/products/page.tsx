@@ -9,6 +9,8 @@ import SkeletonFilterSidebar from "@/components/SkeletonFilterSidebar";
 import SkeletonSortBox from "@/components/SkeletonSortBox ";
 import MobileFilterSidebar from "@/components/MobileFilterSidebar";
 
+
+
 const ProductsPageWithFilters = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -187,6 +189,9 @@ const ProductsPageWithFilters = () => {
     setPriceRange([min, max]);
   }, [searchParams]);
 
+  useEffect(() => {
+    document.title = "آرایشی | محصولات";
+  }, []);
 
   const searchBoxProps = {
     selectedCategories,

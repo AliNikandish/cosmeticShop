@@ -1,6 +1,10 @@
 import SignForms from "@/components/SignPage/SignForms";
 import React from "react";
 
+export const metadata = {
+  title: "آرایشی | ثبت نام/ورود",
+};
+
 const page = () => {
   return (
     <div className="w-full px-4 lg:px-20 mt-10">

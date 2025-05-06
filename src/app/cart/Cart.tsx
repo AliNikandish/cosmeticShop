@@ -1,7 +1,7 @@
 "use client";
 import { GoDash, GoPlus, GoTrash } from "react-icons/go";
 import { CalculatePercentage } from "../../../utils/Helper";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
@@ -65,6 +65,10 @@ const Cart = () => {
       confirmButtonText: "باشه",
     });
   }
+
+  useEffect(() => {
+    document.title = "آرایشی | سبد خرید";
+  }, []);
 
   if (cart.length > 0) {
     return (

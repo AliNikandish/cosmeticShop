@@ -4,6 +4,10 @@ import { FaCircleCheck, FaCirclePlay, FaHeadset, FaRegStar } from "react-icons/f
 import AboutUsCard from "./AboutUsCard";
 import { RiLock2Line } from "react-icons/ri";
 
+export const metadata = {
+  title: "آرایشی | درباره ما",
+};
+
 const page = () => {
   return (
     <div className="w-full">

@@ -3,6 +3,9 @@ import Contact from '@/components/Contact/Contact'
 import React from 'react'
 import prisma from '../../../lib/prismaDB';
 
+export const metadata = {
+  title: "آرایشی | وبلاگ",
+};
 
 type ArticleCardProps = {
   title: string

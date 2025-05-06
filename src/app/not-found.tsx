@@ -1,7 +1,10 @@
 
-"use client"
 import Link from 'next/link'
 import React from 'react'
+
+export const metadata = {
+  title: "آرایشی | این صفحه وجود ندارد",
+};
 
 const page = () => {
   return (

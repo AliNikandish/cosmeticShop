@@ -4,6 +4,28 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaGift, FaHeadset, FaHeart, FaRegCircleCheck, FaRegStar, FaStar, FaStarHalfStroke } from "react-icons/fa6";
 import prisma from "../../../../lib/prismaDB";
 import AddToBasketButton from "@/components/AddToBasketButton";
+import { Metadata } from "next";
+
+type Props = {
+  params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const product = await prisma.product.findUnique({
+    where: { id: params.id },
+    select: { title: true },
+  });
+
+  if (!product) {
+    return {
+      title: "محصول یافت نشد | فروشگاه",
+    };
+  }
+
+  return {
+    title: `${product.title} | فروشگاه`,
+  };
+}
 
 const Product = async({
   params,

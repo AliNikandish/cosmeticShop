@@ -8,6 +8,30 @@ import {
   FormatTimelongWithHour,
 } from "../../../../utils/Helper";
 
+import { Metadata } from "next";
+
+type Props = {
+  params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const article = await prisma.article.findUnique({
+    where: { id: params.id },
+    select: { title: true },
+  });
+
+  if (!article) {
+    return {
+      title: "مقاله یافت نشد | وبلاگ",
+    };
+  }
+
+  return {
+    title: `${article.title} | وبلاگ`,
+  };
+}
+
+
 const page = async ({
   params,
 }: {

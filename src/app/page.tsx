@@ -8,6 +8,10 @@ import Offers from "@/components/IndexPage/offers/Offers";
 import SiteFeatures from "@/components/IndexPage/SiteFeatures/SiteFeatures";
 import TopBrands from "@/components/IndexPage/TopBrands/TopBrands";
 
+export const metadata = {
+  title: "آرایشی | صفحه اصلی",
+};
+
 export default  async function Home() {
 
   return (
